@@ -1,5 +1,3 @@
-document.body.appendChild(renderer.domElement);
-
 let camera, scene, renderer; // Глобальные переменные Three js
 const originalBoxSize = 3;
 
@@ -8,7 +6,7 @@ function init() {
 
   addLayer(0, 0, originalBoxSize, originalBoxSize);
 
-  addLayer(-10. 0, originalBoxSize, originalBoxSize, 'x');
+  addLayer(-10, 0, originalBoxSize, originalBoxSize, 'x');
 
   const ambientLight = new THREE.AmbientLight(0xfffff, .6);
   scene.add(ambientLight);
@@ -35,4 +33,34 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.render(scene, camera);
   document.body.appendChild(renderer.domElement);
+}
+
+let stack = [];
+const boxHeight = 1;
+
+function addLayer(x, z, width, depth, direction) {
+  const y = boxHeight * stack.length;
+
+  const layer = generateBox(x, y, z, width, depth);
+  layer.direction = direction;
+
+  stack.push(layer);
+}
+
+function generateBox(x, y, z, width, depth) {
+  const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
+
+  const color = new THREE.Color(`hsl(${30 + stack.length * 4}, 100%, 50%)`);
+  const material = new THREE.MeshLambertMaterial({color});
+
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(x, y, z);
+
+  scene.add(mesh);
+
+  return {
+    threejs: mesh,
+    width, 
+    height
+  }
 }
