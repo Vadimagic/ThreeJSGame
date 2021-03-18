@@ -30,3 +30,10 @@ const camera = new THREE.OrthographicCamera(
 
 camera.position.set(4, 4, 4);
 camera.lookAt(0, 0, 0);
+
+// Рендер
+const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.render(scene, camera);
+
+document.body.appendChild(renderer.domElement);
