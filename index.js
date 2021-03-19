@@ -85,3 +85,16 @@ window.addEventListener('click', () => {
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
   }
 });
+
+function animate() {
+  const speed = 0.15;
+
+  const topLayer = stack[stack.length - 1];
+  topLayer.threejs.position[topLayer.direction] += speed;
+
+  if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
+    camera.position.y += speed;
+  }
+
+  renderer.render(scene, camera)
+}
