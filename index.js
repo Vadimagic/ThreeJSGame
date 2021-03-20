@@ -73,16 +73,34 @@ window.addEventListener('click', () => {
     gameStarted = true;
   } else {
     const topLayer = stack[stack.length - 1];
+    const previousLayer = stack[stack.length - 2];
+
     const direction = topLayer.direction;
 
-    // Следующий слой
-    const nextX = direction == 'x' ? 0 : -10;
-    const nextZ = direction == "z" ? 0 : -10;
-    const newWidth = originalBoxSize;
-    const newDepth = originalBoxSize;
-    const nextDirection = direction == 'x' ? 'z' : 'x';
+    const delta = topLayer.threejs.position[direction] - previousLayer.threejs.position[direction];
 
-    addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+    const overhangSize = Math.abs(delta);
+
+    const size = direction == 'x' ? topLayer.width : topLayer.depth;
+
+    const overlap = size - overhangSize;
+
+    if (overlap > 0) {
+      const newWidth = direction == 'x' ? overlap : topLayer.width;
+      const newDepth = direction == "z" ? overlap : topLayer.depth;
+
+      topLayer.width = newWidth;
+      topLayer.depth = newDepth;
+
+      topLayer.threejs.scale[direction] = overlap /size;
+      topLayer.threejs.position[direction] = delta / 2;
+
+      const nextX = direction == 'x' ? topLayer.threejs.position.x : -10;
+      const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
+      const nextDirection = direction == 'x' ? 'z' : 'x';
+
+      addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+    }
   }
 });
 
