@@ -47,6 +47,12 @@ function addLayer(x, z, width, depth, direction) {
   stack.push(layer);
 }
 
+function addOverhang(x, z, width, depth) {
+  const y = boxHeight * (stack.length - 1);
+  const overhang = generateBox(x, y, z, width, depth);
+  overhangs.push(overhang);
+}
+
 function generateBox(x, y, z, width, depth) {
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
   
@@ -94,6 +100,18 @@ window.addEventListener('click', () => {
 
       topLayer.threejs.scale[direction] = overlap /size;
       topLayer.threejs.position[direction] = delta / 2;
+
+      const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta);
+      const overhangX = direction == 'x'
+        ? topLayer.threejs.position.x + overhangShift
+        : topLayer.threejs.position.z;
+      const overhangZ = direction == 'z'
+        ? topLayer.threejs.position.z + overhangShift
+        : topLayer.threejs.position.x;
+      const overhangWidth = direction == 'x' ? overhangSize : newWidth;
+      const overhangDepth = direction == 'z' ? overhangSize : newDepth;
+      
+      addOverhang(overhangX, overhangZ, overhangWidth, overhangDepth);
 
       const nextX = direction == 'x' ? topLayer.threejs.position.x : -10;
       const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
