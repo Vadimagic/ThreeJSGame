@@ -2,6 +2,11 @@ let camera, scene, renderer; // Глобальные переменные Three 
 const originalBoxSize = 3;
 
 function init() {
+  world = new CANNON.World();
+  world.gravity.set(0, -10, 0);
+  world.broadphase = new CANNON.NaiveBroadphase();
+  world.solver.iterations = 40;
+
   scene = new THREE.Scene();
   
   addLayer(0, 0, originalBoxSize, originalBoxSize);
