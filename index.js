@@ -36,6 +36,7 @@ function init() {
 }
 
 let stack = [];
+let overhangs = [];
 const boxHeight = 1;
 
 function addLayer(x, z, width, depth, direction) {
