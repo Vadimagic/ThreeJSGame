@@ -135,11 +135,12 @@ window.addEventListener('click', () => {
   }
 });
 
-function animate() {
+function animation() {
   const speed = 0.15;
 
   const topLayer = stack[stack.length - 1];
   topLayer.threejs.position[topLayer.direction] += speed;
+  topLayer.cannonjs.position[topLayer.direction] += speed;
 
   if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
     camera.position.y += speed;
