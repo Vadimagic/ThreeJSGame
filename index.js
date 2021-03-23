@@ -169,3 +169,12 @@ function cutBox(topLayer, overlap, size, delta) {
   topLayer.cannonjs.shapes = [];
   topLayer.cannonjs.addShape(shape);
 }
+
+function updatePhysics() {
+  world.step(1 / 60);
+
+  overhangs.forEach((element) => {
+    element.threejs.position.copy(element.cannonjs.position);
+    element.threejs.quaternion.copy(element.cannonjs.quaternion);
+  });
+}
