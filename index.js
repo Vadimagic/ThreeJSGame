@@ -80,7 +80,7 @@ function generateBox(x, y, z, width, depth, falls) {
     threejs: mesh,
     cannonjs: body,
     width, 
-    height
+    depth
   }
 }
 
@@ -178,3 +178,5 @@ function updatePhysics() {
     element.threejs.quaternion.copy(element.cannonjs.quaternion);
   });
 }
+
+init();
