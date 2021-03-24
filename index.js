@@ -80,7 +80,7 @@ function generateBox(x, y, z, width, depth, falls) {
     threejs: mesh,
     cannonjs: body,
     width, 
-    depth
+    depth,
   }
 }
 
