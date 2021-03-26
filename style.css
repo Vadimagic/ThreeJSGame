@@ -21,3 +21,12 @@ body:hover #instructions {
   width: 100%;
   background-color: rgba(20, 20, 20, 0.75);
 }
+
+#score {
+  position: absolute;
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+  top: 30px;
+  right: 30px;
+}
