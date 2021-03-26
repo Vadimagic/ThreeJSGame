@@ -1,5 +1,7 @@
 const originalBoxSize = 3;
 
+const scoreElement = document.getElementById("score");
+
 function init() {
   world = new CANNON.World();
   world.gravity.set(0, -10, 0);
